@@ -22,4 +22,11 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SDL2.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="SDL2main.lib" />
+    <Library Include="SDL2.lib" />
+  </ItemGroup>
 </Project>
