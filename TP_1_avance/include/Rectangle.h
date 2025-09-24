@@ -11,6 +11,7 @@ public:
     virtual void OnMouseEnter() {}
     virtual void OnMouseExit() {}
     virtual void OnLeftClick() {}
+    virtual void OnRightClick() {}
 
     void Render(SDL_Surface* Surface) const {
         auto [r, g, b, a] {
@@ -51,6 +52,13 @@ public:
                 std::cout << "A left-click happened "
                     "on me!\n";
                 OnLeftClick();
+            }
+            else if (isPointerHovering &&
+                E.button.button == SDL_BUTTON_RIGHT
+                ) {
+                std::cout << "A right-click happened "
+                    "on me!\n";
+                OnRightClick();
             }
         }
     }

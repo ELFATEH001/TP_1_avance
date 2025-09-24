@@ -15,7 +15,7 @@ public:
             for (int j = 0; j < DY_m; j++)
             {
                 Button temp_rec{ *this,  SDL_Rect{actual_builder_posx_m, actual_builder_posy_m, Button_size_x_m, Button_size_y_m}, j,i};
-                rectangle_matrix_m.push_back(temp_rec);
+                button_matrix_m.push_back(temp_rec);
                 actual_builder_posy_m += (int)Button_BT_dis_m;
             }
             actual_builder_posx_m += Button_BT_dis_m;
@@ -27,7 +27,7 @@ public:
         /*A.Render(Surface);
         B.Render(Surface);
         C.Render(Surface);*/
-        for (auto& rectangle_to_draw : rectangle_matrix_m)
+        for (auto& rectangle_to_draw : button_matrix_m)
         {
             rectangle_to_draw.Render(Surface);
         }
@@ -38,20 +38,24 @@ public:
         A.HandleEvent(E);
         B.HandleEvent(E);
         // C.HandleEvent(E);
-        for (auto& rectangle_to_draw : rectangle_matrix_m)
+        for (auto& rectangle_to_draw : button_matrix_m)
         {
             rectangle_to_draw.HandleEvent(E);
         }
     }
 
-    void SetRectangleColors(const SDL_Color& Color) {
-        A.SetColor(Color);
-        B.SetColor(Color);
-        for (auto& rectangle_to_draw : rectangle_matrix_m)
+    void SetRectangleColors(const SDL_Color& Color, int pos_x, int pos_y) {
+        /*A.SetColor(Color);
+        B.SetColor(Color);*/
+        for (auto& button_to_draw : button_matrix_m)
         {
-            rectangle_to_draw.SetColor(Color);
+            if (button_to_draw.id_x_m == pos_x && button_to_draw.id_y_m == pos_y)
+                button_to_draw.SetColor(Color);
+            else continue;
         }
     }
+
+    
 
 private:
     int DX_m = 0;
@@ -66,5 +70,5 @@ private:
     Rectangle A{ SDL_Rect{50, 50, 50, 50} };
     Rectangle B{ SDL_Rect{150, 50, 50, 50} };
     Button    C{ *this,  SDL_Rect{250, 50, 50, 50} , 0,0 };
-    std::vector<Button> rectangle_matrix_m;
+    std::vector<Button> button_matrix_m;
 }; 

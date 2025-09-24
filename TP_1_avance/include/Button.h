@@ -43,9 +43,15 @@ public:
     }
 
     void OnLeftClick() override;
+    void OnRightClick();
+    void Slect_Box();
+    void PutFlag();
+
+
+    int id_x_m = 0;
+    int id_y_m = 0;
 
 private:
     UI& UIManager;
-    int id_x_m = 0;
-    int id_y_m = 0;
+    
 };
