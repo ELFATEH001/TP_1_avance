@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <time.h>
 #include <SDL.h>
+#include "Window.h"
+#include "UI.h"
 #include <stdio.h>
 #undef main
 
@@ -16,7 +18,6 @@ typedef struct {
     CaseGrille CaseGrille[100][100];
 } CG_mat;
 
-
 struct GrillJeu {   // Structure declaration
     int DX;
     int DY;
@@ -27,9 +28,6 @@ struct GrillJeu {   // Structure declaration
 };
 
 //int * fillMatrix(int DIMWX, int DIMWY );
-
-
-
 
 struct GrillJeu Init_jeu(int DIMWX, int DIMWY)
 {
@@ -379,108 +377,59 @@ struct GrillJeu Remplissage(struct GrillJeu GrillJeu_element)
 }
 
 
-int main(void)
+int main(int argc, char** argv)
 {
 
-    //int DIMWX = 10;
-    //int DIMWY = 10;
-    //int Max_bombes = 20;
+    SDL_Init(SDL_INIT_VIDEO);
+    Window GameWindow;
+    UI UIManager;
 
-    //// setting the srand for different games
-    //srand(time(NULL));
-
-    ////std::cout <<"DM_X est " << DIMWX << " DM_Y est " << DIMWY  <<  std::endl ;
-    //struct GrillJeu matrix_result;
-    //matrix_result = Init_jeu(DIMWX, DIMWY);
-    //matrix_result = pos_bombes(matrix_result, Max_bombes);
-    //matrix_result = Remplissage(matrix_result);
-    //// std::cout <<"my_game DX est " << my_game.DX << " my_game DY est " << my_game.DY  <<  std::endl ;
-
-    ////my_game.matrix = matrix_result;
-
-    //for (int i = 0; i < DIMWX; i++) {
-    //    //std::cout << "new line" ;
-    //    for (int j = 0; j < DIMWY; j++) {
-    //        if (matrix_result.matrix.CaseGrille[i][j].mines == -1)
-    //            std::cout << matrix_result.matrix.CaseGrille[i][j].mines << "  ";
-    //        //std::cout << "(" << matrix_result.matrix.CaseGrille[i][j].decouverte ;
-    //        else {
-    //            std::cout << " " << matrix_result.matrix.CaseGrille[i][j].mines << "  ";
-    //        }
-    //    }
-
-    //    std::cout << std::endl;
-    //}
-
-    SDL_Event event;
-        int quit = 0;
-
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        printf("SDL_Init Error: %s\n", SDL_GetError());
-        return 1;
-    }
-    SDL_Window* win = SDL_CreateWindow("Hello SDL2",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        640, 480, SDL_WINDOW_SHOWN);
-    if (!win) {
-        printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
-        SDL_Quit();
-        return 1;
-    }
-
-    struct SDL_MouseButtonEvent temp_one;
-    /* Loop until an SDL_QUIT event is found */
-    while (!quit) {
-
-        /* Poll for events */
-        while (SDL_PollEvent(&event)) {
-
-            switch (event.type) {
-                /* Keyboard event */
-                /* Pass the event data onto PrintKeyInfo() */
-            case SDL_MOUSEBUTTONUP:
-                std::cout << "Mouse was relesed" << std::endl;
-                {
-                    struct SDL_MouseButtonEvent temp_one_rel;
-                    temp_one_rel = event.button;
-                    std::cout << "the clicked is " << (int)temp_one_rel.button << "  hmmm" << std::endl;
-                    std::cout << "it is  " << (int)temp_one_rel.state << std::endl;
-                    std::cout << "it is  " << (int)temp_one_rel.state << std::endl;
-                }
-                break;
-            
-            case SDL_MOUSEBUTTONDOWN:
-                std::cout << "Mouse was pressed" << std::endl;
-                {
-                    struct SDL_MouseButtonEvent temp_one_pre;
-                    temp_one_pre = event.button;
-                    std::cout << "the clicked is " << (int)temp_one_pre.button << "  hmmm" << std::endl;
-                    std::cout << "it is  " << (int)temp_one_pre.state << std::endl;
-                }
-                break;
-
-            case SDL_KEYDOWN:
-                //PrintKeyInfo(&event.key);
-                break;
-
-                /* SDL_QUIT event (window close) */
-            case SDL_QUIT:
-                quit = 1;
-                break;
-
-            default:
-                break;
+    SDL_Event E;
+    while (true) {
+        while (SDL_PollEvent(&E)) {
+            UIManager.HandleEvent(E);
+            if (E.type == SDL_QUIT) {
+                SDL_Quit();
+                return 0;
             }
-
         }
 
+        GameWindow.Render();
+        UIManager.Render(GameWindow.GetSurface());
+        GameWindow.Update();
     }
-    SDL_DestroyWindow(win);
-    SDL_Quit();
-    
-
 
     return 0;
 }
 
+
+//int DIMWX = 10;
+//int DIMWY = 10;
+//int Max_bombes = 20;
+
+//// setting the srand for different games
+//srand(time(NULL));
+
+////std::cout <<"DM_X est " << DIMWX << " DM_Y est " << DIMWY  <<  std::endl ;
+//struct GrillJeu matrix_result;
+//matrix_result = Init_jeu(DIMWX, DIMWY);
+//matrix_result = pos_bombes(matrix_result, Max_bombes);
+//matrix_result = Remplissage(matrix_result);
+//// std::cout <<"my_game DX est " << my_game.DX << " my_game DY est " << my_game.DY  <<  std::endl ;
+
+////my_game.matrix = matrix_result;
+
+//for (int i = 0; i < DIMWX; i++) {
+//    //std::cout << "new line" ;
+//    for (int j = 0; j < DIMWY; j++) {
+//        if (matrix_result.matrix.CaseGrille[i][j].mines == -1)
+//            std::cout << matrix_result.matrix.CaseGrille[i][j].mines << "  ";
+//        //std::cout << "(" << matrix_result.matrix.CaseGrille[i][j].decouverte ;
+//        else {
+//            std::cout << " " << matrix_result.matrix.CaseGrille[i][j].mines << "  ";
+//        }
+//    }
+
+//    std::cout << std::endl;
+//}
 

@@ -94,6 +94,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>F:\M1_A&amp;R\Base_INFO\LIBS\SDL2-devel-2.32.10-VC\SDL2-2.32.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,6 +113,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>F:\M1_A&amp;R\Base_INFO\LIBS\SDL2-devel-2.32.10-VC\SDL2-2.32.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,6 +130,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>F:\M1_A&amp;R\Base_INFO\LIBS\SDL2-devel-2.32.10-VC\SDL2-2.32.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,6 +149,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>F:\M1_A&amp;R\Base_INFO\LIBS\SDL2-devel-2.32.10-VC\SDL2-2.32.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\In_cpp.cpp" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
@@ -164,6 +169,12 @@
   <ItemGroup>
     <Library Include="SDL2.lib" />
     <Library Include="SDL2main.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Button.h" />
+    <ClInclude Include="src\Rectangle.h" />
+    <ClInclude Include="src\UI.h" />
+    <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
