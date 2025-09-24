@@ -10,7 +10,7 @@ public:
             "Hello Window",
             SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED,
-            700, 300, 0
+            290, 335, 0
         );
     }
 

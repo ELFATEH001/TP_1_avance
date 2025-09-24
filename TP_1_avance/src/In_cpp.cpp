@@ -379,12 +379,17 @@ struct GrillJeu Remplissage(struct GrillJeu GrillJeu_element)
 
 int main(int argc, char** argv)
 {
+    // Game matrix dimension
+    int DIMWX = 10;
+    int DIMWY = 10;
 
+    // SDL setup
     SDL_Init(SDL_INIT_VIDEO);
     Window GameWindow;
-    UI UIManager;
-
+    UI UIManager(DIMWX, DIMWY);
     SDL_Event E;
+
+    // the main game loop
     while (true) {
         while (SDL_PollEvent(&E)) {
             UIManager.HandleEvent(E);

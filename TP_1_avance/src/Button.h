@@ -8,11 +8,11 @@ class UI;
 
 class Button : public Rectangle {
 public:
-    Button(UI& UIManager, const SDL_Rect& Rect)
-        : UIManager{ UIManager },
+    Button(UI& UIManager, const SDL_Rect& Rect,int id_x, int id_y)
+        : UIManager{ UIManager }, id_x_m(id_x), id_y_m(id_y),
         Rectangle{ Rect }
     {
-        SetColor({ 255, 165, 0, 255 }); // Orange
+        SetColor({ 200, 200, 200, 255 }); // Orange
     }
 
     void HandleEvent(SDL_Event& E) {
@@ -35,6 +35,7 @@ public:
     // This doesn't exist, but I wish it did
     void OnMouseEnter() override {
         std::cout << "Hello mouse\n";
+        std::cout << "I' am the (i: " << id_x_m +1 << " ,j:" << id_y_m +1 <<")"<< std::endl;
     }
 
     void OnMouseExit() override {
@@ -45,4 +46,6 @@ public:
 
 private:
     UI& UIManager;
+    int id_x_m = 0;
+    int id_y_m = 0;
 };
