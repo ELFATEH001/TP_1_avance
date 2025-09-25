@@ -1,31 +1,13 @@
-#include <iostream>
-#include <stdio.h>
-#include <time.h>
+#include "game_types.h"
 #include <SDL.h>
 #include "Window.h"
 #include "UI.h"
 #include <stdio.h>
+#include <SDL_ttf.h>
 #undef main
 
+#define MY_FONT "F:/M1_A&R/Base_INFO/TP/TP_1_avance/TP_1_avance/fonts/BBC.ttf"
 
-struct CaseGrille {   // Structure declaration
-    int  mines;           // -1 si mine, 0..8 pour le nombre de mines dans les cases adjacentes
-    bool decouverte;      // si cette case a déjà été choisie par l’utilisateur
-    int  drapeau;        //  repérer si un drapeau a été posé sur cette case
-};
-
-typedef struct {
-    CaseGrille CaseGrille[100][100];
-} CG_mat;
-
-struct GrillJeu {   // Structure declaration
-    int DX;
-    int DY;
-    int nb_mines;
-    CG_mat matrix;
-    bool fin_partie;
-    int nb_cases_a_decouvrir;
-};
 
 //int * fillMatrix(int DIMWX, int DIMWY );
 
@@ -106,7 +88,7 @@ struct GrillJeu pos_bombes(struct GrillJeu GrillJeu_element, int Max_bombes)
 
 }
 
-int bombes_counter_NC(struct GrillJeu GrillJeu_element,int special_pos_type,  int i, int j) {
+int bombes_counter_NC(struct GrillJeu GrillJeu_element, int special_pos_type, int i, int j) {
     int counter = 0;
 
 
@@ -116,8 +98,8 @@ int bombes_counter_NC(struct GrillJeu GrillJeu_element,int special_pos_type,  in
     // 2 : edge   : else
 
     struct GrillJeu GrilleJeu_fun = GrillJeu_element;
-    
-    
+
+
     if (special_pos_type == 0)
     {
         // GrillJeu_element.matrix.CaseGrille[i][j].mines = 9;
@@ -143,7 +125,7 @@ int bombes_counter_NC(struct GrillJeu GrillJeu_element,int special_pos_type,  in
 
             }
         }
-        else if (i == GrillJeu_element.DX -1 && j == GrillJeu_element.DY - 1)
+        else if (i == GrillJeu_element.DX - 1 && j == GrillJeu_element.DY - 1)
         {
             for (int i_c = -1; i_c <= 0; i_c++)
             {
@@ -191,7 +173,7 @@ int bombes_counter_NC(struct GrillJeu GrillJeu_element,int special_pos_type,  in
         {
             for (int i_c = 0; i_c <= 1; i_c++)
             {
-                for (int j_c = -1 ; j_c <= 0; j_c++)
+                for (int j_c = -1; j_c <= 0; j_c++)
                 {
                     if (i_c == 0 && j_c == 0)
                     {
@@ -214,11 +196,11 @@ int bombes_counter_NC(struct GrillJeu GrillJeu_element,int special_pos_type,  in
             counter = 9;
         }
 
-    
+
     }
     else if (special_pos_type == 1)
     {
-        if (i == 0 )
+        if (i == 0)
         {
             for (int i_c = 0; i_c <= 1; i_c++)
             {
@@ -262,7 +244,7 @@ int bombes_counter_NC(struct GrillJeu GrillJeu_element,int special_pos_type,  in
 
             }
         }
-        else if ( j == 0)
+        else if (j == 0)
         {
             for (int i_c = -1; i_c <= 1; i_c++)
             {
@@ -337,7 +319,6 @@ int bombes_counter_NC(struct GrillJeu GrillJeu_element,int special_pos_type,  in
 
 }
 
-
 struct GrillJeu Remplissage(struct GrillJeu GrillJeu_element)
 {
 
@@ -382,11 +363,64 @@ int main(int argc, char** argv)
     // Game matrix dimension
     int DIMWX = 10;
     int DIMWY = 10;
+    int Max_bombes = 20;
+
+    // setting the srand for different games
+    srand(time(NULL));
+
+    //std::cout <<"DM_X est " << DIMWX << " DM_Y est " << DIMWY  <<  std::endl ;
+    struct GrillJeu matrix_result;
+    matrix_result = Init_jeu(DIMWX, DIMWY);
+    matrix_result = pos_bombes(matrix_result, Max_bombes);
+    matrix_result = Remplissage(matrix_result);
+    // std::cout <<"my_game DX est " << my_game.DX << " my_game DY est " << my_game.DY  <<  std::endl ;
+
+    //my_game.matrix = matrix_result;
+
+    for (int i = 0; i < DIMWX; i++) {
+        //std::cout << "new line" ;
+        for (int j = 0; j < DIMWY; j++) {
+            if (matrix_result.matrix.CaseGrille[i][j].mines == -1)
+                std::cout << matrix_result.matrix.CaseGrille[i][j].mines << "  ";
+            //std::cout << "(" << matrix_result.matrix.CaseGrille[i][j].decouverte ;
+            else {
+                std::cout << " " << matrix_result.matrix.CaseGrille[i][j].mines << "  ";
+            }
+        }
+
+        std::cout << std::endl;
+    }
 
     // SDL setup
     SDL_Init(SDL_INIT_VIDEO);
+    // Initialize SDL_ttf
+    if (TTF_Init() < 0) {
+        printf("SDL_ttf could not initialize! TTF_Error: %s\n", TTF_GetError());
+        SDL_Quit();
+        return EXIT_FAILURE;
+    }
+    TTF_Font* font = TTF_OpenFont(MY_FONT, 64); // specify the path to your font file and font size
+    if (!font) {
+        printf("Failed to load font: %s\n", TTF_GetError());
+        return EXIT_FAILURE;
+    }
+
+    
+
+
     Window GameWindow;
-    UI UIManager(DIMWX, DIMWY);
+    UI UIManager(matrix_result, DIMWX, DIMWY);
+    
+    //SDL_Renderer* renderer = SDL_CreateRenderer(GameWindow, -1, 0);
+    // Create surface with rendered text
+    SDL_Color textColor = { 0, 0, 0, 255 }; // black color
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, "Hello World!", textColor);
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(GameWindow.renderer_m, textSurface);
+    // Render text
+    SDL_Rect textRect = { 50, 50, textSurface->w, textSurface->h }; // rectangle where the text is drawn 
+    SDL_RenderCopy(GameWindow.renderer_m, textTexture, NULL, &textRect);
+    
+    
     SDL_Event E;
 
     // the main game loop
@@ -400,41 +434,11 @@ int main(int argc, char** argv)
         }
 
         GameWindow.Render();
+        SDL_RenderPresent(GameWindow.renderer_m);
         UIManager.Render(GameWindow.GetSurface());
         GameWindow.Update();
     }
 
     return 0;
 }
-
-
-//int DIMWX = 10;
-//int DIMWY = 10;
-//int Max_bombes = 20;
-
-//// setting the srand for different games
-//srand(time(NULL));
-
-////std::cout <<"DM_X est " << DIMWX << " DM_Y est " << DIMWY  <<  std::endl ;
-//struct GrillJeu matrix_result;
-//matrix_result = Init_jeu(DIMWX, DIMWY);
-//matrix_result = pos_bombes(matrix_result, Max_bombes);
-//matrix_result = Remplissage(matrix_result);
-//// std::cout <<"my_game DX est " << my_game.DX << " my_game DY est " << my_game.DY  <<  std::endl ;
-
-////my_game.matrix = matrix_result;
-
-//for (int i = 0; i < DIMWX; i++) {
-//    //std::cout << "new line" ;
-//    for (int j = 0; j < DIMWY; j++) {
-//        if (matrix_result.matrix.CaseGrille[i][j].mines == -1)
-//            std::cout << matrix_result.matrix.CaseGrille[i][j].mines << "  ";
-//        //std::cout << "(" << matrix_result.matrix.CaseGrille[i][j].decouverte ;
-//        else {
-//            std::cout << " " << matrix_result.matrix.CaseGrille[i][j].mines << "  ";
-//        }
-//    }
-
-//    std::cout << std::endl;
-//}
 

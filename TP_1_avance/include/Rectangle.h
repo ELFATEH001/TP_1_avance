@@ -15,7 +15,7 @@ public:
 
     void Render(SDL_Surface* Surface) const {
         auto [r, g, b, a] {
-            isPointerHovering ? HoverColor : Color
+            isPointerHovering ? Color : Color
             };
         SDL_FillRect(
             Surface, &Rect,
@@ -83,7 +83,7 @@ public:
 private:
     SDL_Rect Rect;
     SDL_Color Color{ 255, 0, 0, 255 };
-    SDL_Color HoverColor{ 0, 0, 255, 255 };
+    SDL_Color HoverColor{ 230, 230, 230, 255 };
 
     
 

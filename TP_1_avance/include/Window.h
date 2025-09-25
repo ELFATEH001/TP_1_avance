@@ -12,6 +12,7 @@ public:
             SDL_WINDOWPOS_UNDEFINED,
             290, 335, 0
         );
+        SDL_Renderer* renderer_m = SDL_CreateRenderer(SDLWindow, -1, 0);
     }
 
     void Render() {
@@ -39,7 +40,9 @@ public:
             SDL_DestroyWindow(SDLWindow);
         }
     }
+    SDL_Renderer* renderer_m{ nullptr };
 
 private:
     SDL_Window* SDLWindow{ nullptr };
+    
 };

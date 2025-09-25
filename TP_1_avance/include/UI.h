@@ -3,18 +3,20 @@
 #include "Rectangle.h"
 #include "Button.h"
 #include <vector>
+#include "game_types.h"
 
 class UI {
 public:
-    UI(int DX, int DY)
-        : DX_m(DX), DY_m(DY)
+    UI(struct GrillJeu GrillJeu_ins, int DX, int DY)
+        : GrillJeu_ins_m(GrillJeu_ins), DX_m(DX), DY_m(DY)
     {
         
-        for (int i = 0; i < DX_m ; i++)
+        for (int j = 0; j < DX_m ; j++)
         {
-            for (int j = 0; j < DY_m; j++)
+            for (int i = 0; i < DY_m; i++)
             {
-                Button temp_rec{ *this,  SDL_Rect{actual_builder_posx_m, actual_builder_posy_m, Button_size_x_m, Button_size_y_m}, j,i};
+                
+                Button temp_rec{ *this,  SDL_Rect{actual_builder_posx_m, actual_builder_posy_m, Button_size_x_m, Button_size_y_m}, i,j,GrillJeu_ins.matrix.CaseGrille[i][j]};
                 button_matrix_m.push_back(temp_rec);
                 actual_builder_posy_m += (int)Button_BT_dis_m;
             }
@@ -60,6 +62,7 @@ public:
 private:
     int DX_m = 0;
     int DY_m = 0;
+    struct GrillJeu GrillJeu_ins_m;
     int Button_size_x_m = 20;
     int Button_size_y_m = 20;
     float Button_BT_dis_m = 25; //(float)Button_size_x_m / 2 ;
@@ -69,6 +72,6 @@ private:
     float distance_btw_bt;
     Rectangle A{ SDL_Rect{50, 50, 50, 50} };
     Rectangle B{ SDL_Rect{150, 50, 50, 50} };
-    Button    C{ *this,  SDL_Rect{250, 50, 50, 50} , 0,0 };
+    //Button    C{ *this,  SDL_Rect{250, 50, 50, 50} , 0,0,0};
     std::vector<Button> button_matrix_m;
 }; 
