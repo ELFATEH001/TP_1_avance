@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "Rectangle.h"
 #include "Button.h"
+#include "text.h"
 #include <vector>
 #include "game_types.h"
 
@@ -72,6 +73,7 @@ private:
     float distance_btw_bt;
     Rectangle A{ SDL_Rect{50, 50, 50, 50} };
     Rectangle B{ SDL_Rect{150, 50, 50, 50} };
+    Text test_text{"HI"};
     //Button    C{ *this,  SDL_Rect{250, 50, 50, 50} , 0,0,0};
     std::vector<Button> button_matrix_m;
 }; 

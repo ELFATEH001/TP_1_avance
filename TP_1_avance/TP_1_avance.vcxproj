@@ -161,7 +161,12 @@
   <ItemGroup>
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\In_cpp.cpp" />
-    <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\main.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL2.dll" />
@@ -174,6 +179,7 @@
     <ClInclude Include="include\Button.h" />
     <ClInclude Include="include\game_types.h" />
     <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\text.h" />
     <ClInclude Include="include\UI.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>

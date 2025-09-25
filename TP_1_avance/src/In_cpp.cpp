@@ -3,10 +3,10 @@
 #include "Window.h"
 #include "UI.h"
 #include <stdio.h>
-#include <SDL_ttf.h>
+
 #undef main
 
-#define MY_FONT "F:/M1_A&R/Base_INFO/TP/TP_1_avance/TP_1_avance/fonts/BBC.ttf"
+
 
 
 //int * fillMatrix(int DIMWX, int DIMWY );
@@ -399,13 +399,6 @@ int main(int argc, char** argv)
         SDL_Quit();
         return EXIT_FAILURE;
     }
-    TTF_Font* font = TTF_OpenFont(MY_FONT, 64); // specify the path to your font file and font size
-    if (!font) {
-        printf("Failed to load font: %s\n", TTF_GetError());
-        return EXIT_FAILURE;
-    }
-
-    
 
 
     Window GameWindow;
@@ -413,12 +406,22 @@ int main(int argc, char** argv)
     
     //SDL_Renderer* renderer = SDL_CreateRenderer(GameWindow, -1, 0);
     // Create surface with rendered text
-    SDL_Color textColor = { 0, 0, 0, 255 }; // black color
-    SDL_Surface* textSurface = TTF_RenderText_Solid(font, "Hello World!", textColor);
-    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(GameWindow.renderer_m, textSurface);
-    // Render text
-    SDL_Rect textRect = { 50, 50, textSurface->w, textSurface->h }; // rectangle where the text is drawn 
-    SDL_RenderCopy(GameWindow.renderer_m, textTexture, NULL, &textRect);
+    //SDL_SetRenderDrawColor(GameWindow.renderer_m, 255, 255, 255, 255);
+    //SDL_RenderClear(GameWindow.renderer_m);
+
+    //TTF_Font* font = TTF_OpenFont(MY_FONT, 64); // specify the path to your font file and font size
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
     
     
     SDL_Event E;
@@ -434,8 +437,10 @@ int main(int argc, char** argv)
         }
 
         GameWindow.Render();
+        //SDL_RenderCopy(GameWindow.renderer_m, textTexture, NULL, &textRect);
         SDL_RenderPresent(GameWindow.renderer_m);
         UIManager.Render(GameWindow.GetSurface());
+        //SDL_DestroyRenderer(GameWindow.renderer_m);
         GameWindow.Update();
     }
 

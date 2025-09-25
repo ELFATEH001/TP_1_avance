@@ -4,6 +4,9 @@
 #include <iostream>
 #include "game_types.h"
 #include "Rectangle.h"
+#include <SDL_ttf.h>
+
+#define MY_FONT "F:/M1_A&R/Base_INFO/TP/TP_1_avance/TP_1_avance/fonts/BBC.ttf"
 
 class UI;
 
@@ -31,6 +34,16 @@ public:
             std::cout << "Hello mouse\n";
         }*/
     }
+    
+    //void Render(SDL_Surface& Surface) {
+
+
+    //    // Render the Box
+    //    Rectangle::Render(Surface);
+    //    // print associted number
+    //    //bool TTF_DrawRendererText(TTF_Text * text, float x, float y);
+
+    //}
 
 
     // This doesn't exist, but I wish it did
@@ -58,6 +71,7 @@ public:
 
 private:
     UI& UIManager;
+    //TTF_Text;
     //SDL_Text contained_number_tx_m = button_CaseGrill_m.mines;
     
 };
